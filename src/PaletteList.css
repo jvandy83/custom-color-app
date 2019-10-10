@@ -1,0 +1,15 @@
+.PaletteList {
+  width: 100vw;
+  height: 100vh;
+}
+
+.palettes {
+  display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+}
+.palette {
+  height: 50px;
+  width: 50px;
+}
+

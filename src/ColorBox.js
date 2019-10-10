@@ -19,7 +19,7 @@ class ColorBox extends Component {
     const {name, background} = this.props
     const { copied } = this.state
     return(
-      <CopyToClipboard text={this.props.background} onCopy={this.changeCopyState} >
+      <CopyToClipboard text={background} onCopy={this.changeCopyState} >
         <div style={{ background }} className="ColorBox">
           <div 
             style={{ background }} 
@@ -27,7 +27,7 @@ class ColorBox extends Component {
           />
           <div className={`copy-msg ${copied && 'show'}`}>
             <h1>copied!</h1>
-            <p>{this.props.background}</p>
+            <p>{background}</p>
           </div>
           <div className="copy-container">
             <div className="box-content">
