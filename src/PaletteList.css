@@ -1,15 +1,20 @@
 .PaletteList {
-  width: 100vw;
-  height: 100vh;
+  box-sizing: border-box;
+  height: 100%;
+  width: 70%;
+  margin: 2rem auto;
 }
 
 .palettes {
-  display: flex;
-  flex-wrap: wrap;
-  width: 30%;
-}
-.palette {
-  height: 50px;
-  width: 50px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 2rem 0;
 }
 
+.PaletteList-title {
+  margin-right: 4rem;  
+  /* width: 90%; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} 
