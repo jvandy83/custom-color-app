@@ -13,7 +13,10 @@ import './Navbar.css'
 class Navbar extends Component {
   constructor() {
     super()
-    this.state = { format: 'hex', open: false, }
+    this.state = { 
+      format: 'hex', 
+      open: false, 
+    }
     this.handleFormatChange = this.handleFormatChange.bind(this)
     this.closeSnackbar = this.closeSnackbar.bind(this)
   }

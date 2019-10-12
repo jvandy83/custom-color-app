@@ -1,6 +1,4 @@
-* {
-  /* box-sizing: border-box; */
-}
+
 .Palette {
   height: 100vh;
 }
@@ -11,8 +9,6 @@
 .Palette-footer {
   display: flex;
   justify-content: flex-end;
-  /* margin-top: 0.5rem; */
-  /* margin-right: 1rem; */
   align-items: center;
   height: 4vh;
   font-weight: 600;

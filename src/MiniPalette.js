@@ -5,9 +5,9 @@ import { withStyles } from "@material-ui/styles";
 
 const styles = {
   root: {
-    // margin: "auto",
+    margin: "auto",
     width: "250px",
-    border: "1px solid black",
+    // border: "1px solid black",
     background: "white",
     borderRadius: "5px",
     padding: "0.5rem",
@@ -19,9 +19,9 @@ const styles = {
     },
   },
   colors: {
-    display: "grid",
-    gridTemplateColumns: "repeat(5, 50px)", 
-    gridTemplateRows: "repeat(4, 50px)",
+    background: "grey",
+    height: "150px",
+    width: "100%"
   },
   title: {
     display: "flex",
@@ -36,17 +36,30 @@ const styles = {
   emoji: {
     marginLeft: "0.5rem",
     fontSize: "1.5rem"
+  },
+  miniColor: {
+    height: "25%",
+    width: "20%",
+    display: "inline-block",
+    margin: "0 auto",
+    postition: "relative",
+    marginBottom: "-3.5px",
   }
 }
 
 function MiniPalette(props) {
   const { classes, paletteName, emoji, colors } = props
+  const miniColorBoxes = colors.map(color => (
+    <div 
+    key={color.name} 
+    className={classes.miniColor} 
+    style={{backgroundColor: color.color }} 
+  />
+  ))
   return(
     <div className={classes.root} onClick={props.handleClick}>
       <div className={classes.colors}>
-        {colors.map(item => (
-            <div style={{background: item.color}}></div>
-        ))}
+        {miniColorBoxes}
       </div>
       <h5 className={classes.title}>
         {paletteName} <span className={classes.emoji}>{emoji}</span>

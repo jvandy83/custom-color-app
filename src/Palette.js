@@ -31,7 +31,8 @@ class Palette extends Component {
         format={this.state.format} 
         background={color[format]} 
         name={color.name}
-        moreUrl={`/palette/${color.id}/${id}`} 
+        moreUrl={`/palette/${id}/${color.id}`} 
+        showLink={true}
       />
     ))
     return(

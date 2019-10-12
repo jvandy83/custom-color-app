@@ -1,29 +1,60 @@
 import React, { Component } from 'react'
 import MiniPalette from './MiniPalette'
-import './PaletteList.css'
 import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router-dom'
+import { withStyles } from '@material-ui/styles'
+
+const styles = {
+  root: {
+    backgroundColor: 'blue',
+    height: "900px",
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "center"
+  }, 
+  container: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    alignItems: "flex-start",
+    flexDirection: "column",
+    flexWrap: "wrap"
+  },
+  nav: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+    color: "white",
+  },
+  palettes: {
+    boxSizing: "border-box",
+    width: "100%",
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 30%)",
+    gridGap: "5%",
+  }
+}
 
 class PaletteList extends Component {
   goToPalette(id) {
     this.props.history.push(`/palette/${id}`)
   }
   render() {
-    const { palettes } = this.props
+    const { palettes, classes } = this.props
     return(
-      <div className="PaletteList">
-        <div className="PaletteList-title">
-          <h1>React Palette</h1>
-          <Link className="link" to="/">Create Palette</Link>
-        </div>
-        <div className="palettes">
-          {palettes.map(palette => (
-              <MiniPalette handleClick={() => this.goToPalette(palette.id)} {...palette} />
-          ))}
+      <div className={classes.root}>
+        <div className={classes.container}>
+          <nav className={classes.nav }>
+            <h1>React Palette</h1>  
+          </nav>
+          <div className={classes.palettes}>
+            {palettes.map(palette => (
+                <MiniPalette {...palette} handleClick={() => this.goToPalette(palette.id)}/>   
+            ))}
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(PaletteList)
+export default withStyles(styles)(PaletteList)
