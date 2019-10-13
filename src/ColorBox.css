@@ -60,6 +60,14 @@
   font-size: 0.8rem;
 }
 
+.light-text {
+  color: #eeeeee;
+}
+
+.ColorBox .dark-text {
+  color: rgb(0, 0, 0, 0.5);
+}
+
 .see-more {
   background: rgba(255, 255, 255, 0.3);
   position: absolute;
@@ -128,7 +136,7 @@
 
 .copy-msg p {
   font-size: 2rem;
-  font-weight: 100;
+  font-weight: 200;
 }
 
 
