@@ -21,9 +21,12 @@ const styles = {
   },
   nav: {
     display: "flex",
-    width: "100%",
+    width: "80%",
     justifyContent: "space-between",
     color: "white",
+    "& h1": {
+      marginLeft: "5rem",
+    }
   },
   palettes: {
     boxSizing: "border-box",

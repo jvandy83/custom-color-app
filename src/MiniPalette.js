@@ -7,7 +7,7 @@ const styles = {
   root: {
     margin: "auto",
     width: "250px",
-    // border: "1px solid black",
+    border: "1px solid black",
     background: "white",
     borderRadius: "5px",
     padding: "0.5rem",
