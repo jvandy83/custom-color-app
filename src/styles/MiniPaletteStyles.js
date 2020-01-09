@@ -1,9 +1,7 @@
 export default {
   root: {
-    margin: 'auto',
-    width: '250px',
     border: '1px solid black',
-    background: 'white',
+    backgroundColor: 'white',
     borderRadius: '5px',
     padding: '0.5rem',
     position: 'relative',
@@ -14,9 +12,10 @@ export default {
     }
   },
   colors: {
-    background: 'grey',
+    background: 'white',
     height: '150px',
-    width: '100%'
+    width: '100%',
+    overflow: 'hidden'
   },
   title: {
     display: 'flex',

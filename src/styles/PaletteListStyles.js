@@ -1,14 +1,13 @@
 export default {
   root: {
     backgroundColor: 'blue',
-    height: '900px',
+    height: '100vh',
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'center'
   },
   container: {
-    width: '100%',
-    height: '100%',
+    width: '50%',
     display: 'flex',
     alignItems: 'flex-start',
     flexDirection: 'column',
@@ -16,11 +15,12 @@ export default {
   },
   nav: {
     display: 'flex',
-    width: '80%',
+    width: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
     color: 'white',
-    '& h1': {
-      marginLeft: '5rem'
+    '& a': {
+      color: 'white'
     }
   },
   palettes: {
