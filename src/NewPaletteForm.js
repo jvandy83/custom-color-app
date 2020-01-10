@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
+import { colors } from '@material-ui/core';
 
 const drawerWidth = 360;
 
@@ -75,6 +76,8 @@ export function NewPaletteForm() {
   const classes = useStyles();
   // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [currentColor, setCurrentColor] = React.useState('teal');
+  const [colors, setColor] = React.useState(['purple', '#e15764']);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -82,6 +85,14 @@ export function NewPaletteForm() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const updateCurrentColor = newColor => {
+    setCurrentColor(newColor.hex);
+  };
+
+  const addNewColor = () => {
+    setColor([...colors, currentColor]);
   };
 
   return (
@@ -133,10 +144,15 @@ export function NewPaletteForm() {
           </Button>
         </div>
         <ChromePicker
-          color="purple"
-          onChangeComplete={newColor => console.log(newColor)}
+          color={currentColor}
+          onChangeComplete={updateCurrentColor}
         />
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ backgroundColor: currentColor }}
+          onClick={addNewColor}
+        >
           Add Color
         </Button>
       </Drawer>
@@ -146,6 +162,11 @@ export function NewPaletteForm() {
         })}
       >
         <div className={classes.drawerHeader} />
+        <ul>
+          {colors.map(color => (
+            <li style={{ backgroundColor: color }}>{color}</li>
+          ))}
+        </ul>
       </main>
     </div>
   );
