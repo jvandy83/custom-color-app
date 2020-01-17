@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
+import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
+import useFormValidation from './hooks/useFormValidation';
+import validateColor from './validation';
 
 const drawerWidth = 360;
 
@@ -70,30 +73,44 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  input: {
+    height: '1.5rem',
+    outline: 'none'
+  },
+  error: {
+    color: 'red',
+    display: 'inline-block'
+  },
+  btn: {
+    display: 'inline-block'
   }
 }));
 
 export function NewPaletteForm() {
   const classes = useStyles();
-  // const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [currentColor, setCurrentColor] = React.useState('teal');
-  const [colors, setColor] = React.useState(['purple', '#e15764']);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [currentColor, setCurrentColor] = useState('teal');
 
   const updateCurrentColor = newColor => {
     setCurrentColor(newColor.hex);
   };
 
-  const addNewColor = () => {
-    setColor([...colors, currentColor]);
+  const {
+    handleChange,
+    values,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    colors
+  } = useFormValidation(validateColor, currentColor);
+
+  const [open, setOpen] = useState(false);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -148,14 +165,35 @@ export function NewPaletteForm() {
           color={currentColor}
           onChangeComplete={updateCurrentColor}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ backgroundColor: currentColor }}
-          onClick={addNewColor}
-        >
-          Add Color
-        </Button>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            id="standard-basic"
+            type="text"
+            name="input"
+            value={values}
+            onChange={handleChange}
+            style={
+              errors.isColorNameUnique || errors.isColorUnique
+                ? { border: '1px solid red' }
+                : null
+            }
+            required
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isSubmitting}
+          >
+            Add Color
+          </Button>
+          {errors.isColorUnique && (
+            <span className={classes.error}>{errors.isColorUnique}</span>
+          )}
+          {errors.isColorNameUnique && (
+            <span className={classes.error}>{errors.isColorNameUnique}</span>
+          )}
+        </form>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -163,8 +201,8 @@ export function NewPaletteForm() {
         })}
       >
         <div className={classes.drawerHeader} />
-        {colors.map(color => (
-          <DraggableColorBox color={color} />
+        {colors.map((c, i) => (
+          <DraggableColorBox key={i} color={c.color} name={c.name} />
         ))}
       </main>
     </div>
