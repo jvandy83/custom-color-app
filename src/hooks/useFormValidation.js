@@ -35,8 +35,8 @@ function useFormValidation(validate, currentColor) {
 
   return {
     handleChange,
-    values,
     handleSubmit,
+    values,
     errors,
     isSubmitting,
     colors

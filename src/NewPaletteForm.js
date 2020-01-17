@@ -87,7 +87,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function NewPaletteForm() {
+export function NewPaletteForm(props) {
   const classes = useStyles();
 
   const [currentColor, setCurrentColor] = useState('teal');
@@ -104,6 +104,17 @@ export function NewPaletteForm() {
     isSubmitting,
     colors
   } = useFormValidation(validateColor, currentColor);
+
+  const handleClick = () => {
+    let newName = 'New Test Palette';
+    const newPalette = {
+      paletteName: newName,
+      id: newName.toLowerCase().replace(/ /g, '-'),
+      colors
+    };
+    props.savePalette(newPalette);
+    props.history.push('/');
+  };
 
   const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
@@ -122,7 +133,7 @@ export function NewPaletteForm() {
           [classes.appBarShift]: open
         })}
       >
-        <Toolbar>
+        <Toolbar style={{ backgroundColor: '#cccccc' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -135,6 +146,9 @@ export function NewPaletteForm() {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
+          <Button variant="contained" color="primary" onClick={handleClick}>
+            Save Palette
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
