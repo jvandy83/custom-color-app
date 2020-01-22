@@ -1,44 +1,92 @@
 import React from 'react';
+import validateColor from './validateColor';
+import validatePaletteName from './validatePaletteName';
 
-function useFormValidation(validate, currentColor) {
-  const [values, setValues] = React.useState('');
+function useFormValidation(currentColor, palettes, history, savePalette) {
+  const [values, setValues] = React.useState({
+    colorName: '',
+    paletteName: ''
+  });
   const [colors, setColors] = React.useState([]);
   const [errors, setErrors] = React.useState({});
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submittingColor, setSubmittingColor] = React.useState(false);
+  const [submittingPalette, setSubmittingPalette] = React.useState(false);
 
   React.useEffect(() => {
-    if (isSubmitting && Object.keys(errors).length === 0) {
-      addNewColor();
-      setIsSubmitting(false);
-      setValues('');
-    } else {
-      // in case of error isSubmitting will still be reset
-      setIsSubmitting(false);
+    function addNewColor() {
+      setColors([...colors, { color: currentColor, name: values.colorName }]);
     }
-  }, [errors, isSubmitting, colors]);
+    if (submittingColor && Object.keys(errors).length === 0) {
+      addNewColor();
+      setSubmittingColor(false);
+      setValues({
+        colorName: ''
+      });
+    } else if (submittingPalette && Object.keys(errors).length === 0) {
+      const newPalette = {
+        paletteName: values.paletteName,
+        id: values.paletteName.toLowerCase().replace(/ /g, '-'),
+        colors
+      };
+      savePalette(newPalette);
+      setSubmittingPalette(false);
+      setValues({
+        paletteName: ''
+      });
+      history.push('/');
+    } else {
+      setSubmittingPalette(false);
+      setSubmittingColor(false);
+    }
+  }, [
+    errors,
+    submittingColor,
+    colors,
+    currentColor,
+    values,
+    submittingPalette,
+    savePalette,
+    history
+  ]);
 
   function handleChange(e) {
     e.persist();
-    setValues(e.target.value);
+    setValues({
+      [e.target.name]: e.target.value
+    });
   }
 
-  const handleSubmit = e => {
+  const handleColorSubmit = e => {
     e.preventDefault();
-    const validationErrors = validate(colors, currentColor, values);
-    setErrors(validationErrors);
-    setIsSubmitting(true);
+    setErrors(colorValidator);
+    setSubmittingColor(true);
   };
 
-  function addNewColor() {
-    setColors([...colors, { color: currentColor, name: values }]);
+  const handlePaletteSubmit = e => {
+    e.preventDefault();
+    setErrors(paletteValidator);
+    setSubmittingPalette(true);
+    console.log(palettes);
+  };
+
+  function colorValidator() {
+    let cName = values.colorName;
+    let validationErrors = validateColor(colors, currentColor, cName);
+    return validationErrors;
+  }
+
+  function paletteValidator() {
+    let pName = values.paletteName;
+    let validationErrors = validatePaletteName(palettes, pName);
+    return validationErrors;
   }
 
   return {
     handleChange,
-    handleSubmit,
+    handleColorSubmit,
     values,
     errors,
-    isSubmitting,
+    handlePaletteSubmit,
     colors
   };
 }

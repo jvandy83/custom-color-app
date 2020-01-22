@@ -15,7 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
 import DraggableColorBox from './DraggableColorBox';
 import useFormValidation from './hooks/useFormValidation';
-import validateColor from './validation';
 
 const drawerWidth = 360;
 
@@ -80,7 +79,8 @@ const useStyles = makeStyles(theme => ({
   },
   error: {
     color: 'red',
-    display: 'inline-block'
+    display: 'inline-block',
+    textDecoration: 'none'
   },
   btn: {
     display: 'inline-block'
@@ -90,30 +90,21 @@ const useStyles = makeStyles(theme => ({
 export function NewPaletteForm(props) {
   const classes = useStyles();
 
-  const [currentColor, setCurrentColor] = useState('teal');
+  const { savePalette, history, seedColors } = props;
 
-  const updateCurrentColor = newColor => {
-    setCurrentColor(newColor.hex);
-  };
+  const [currentColor, setCurrentColor] = useState('teal');
 
   const {
     handleChange,
     values,
-    handleSubmit,
+    handleColorSubmit,
     errors,
-    isSubmitting,
-    colors
-  } = useFormValidation(validateColor, currentColor);
+    colors,
+    handlePaletteSubmit
+  } = useFormValidation(currentColor, seedColors, history, savePalette);
 
-  const handleClick = () => {
-    let newName = 'New Test Palette';
-    const newPalette = {
-      paletteName: newName,
-      id: newName.toLowerCase().replace(/ /g, '-'),
-      colors
-    };
-    props.savePalette(newPalette);
-    props.history.push('/');
+  const updateCurrentColor = newColor => {
+    setCurrentColor(newColor.hex);
   };
 
   const [open, setOpen] = useState(false);
@@ -146,9 +137,27 @@ export function NewPaletteForm(props) {
           <Typography variant="h6" noWrap>
             Persistent drawer
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleClick}>
-            Save Palette
-          </Button>
+          <form onSubmit={handlePaletteSubmit}>
+            <TextField
+              type="text"
+              name="paletteName"
+              label={
+                errors.isPaletteNameUnique ? (
+                  <span className={classes.error}>
+                    {errors.isPaletteNameUnique}
+                  </span>
+                ) : (
+                  'Palette Name'
+                )
+              }
+              onChange={handleChange}
+              value={values.paletteName || ''}
+              required
+            />
+            <Button variant="contained" color="primary" type="submit">
+              Save Palette
+            </Button>
+          </form>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -179,12 +188,12 @@ export function NewPaletteForm(props) {
           color={currentColor}
           onChangeComplete={updateCurrentColor}
         />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleColorSubmit}>
           <TextField
             id="standard-basic"
             type="text"
-            name="input"
-            value={values}
+            name="colorName"
+            value={values.colorName || ''}
             onChange={handleChange}
             style={
               errors.isColorNameUnique || errors.isColorUnique
@@ -193,12 +202,7 @@ export function NewPaletteForm(props) {
             }
             required
           />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            disabled={isSubmitting}
-          >
+          <Button type="submit" variant="contained" color="primary">
             Add Color
           </Button>
           {errors.isColorUnique && (
