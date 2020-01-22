@@ -87,7 +87,8 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     values,
     errors,
     handlePaletteSubmit,
-    colors
+    colors,
+    setColors
   };
 }
 

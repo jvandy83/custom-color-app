@@ -99,6 +99,7 @@ export function NewPaletteForm(props) {
     values,
     handleColorSubmit,
     errors,
+    setColors,
     colors,
     handlePaletteSubmit
   } = useFormValidation(currentColor, seedColors, history, savePalette);
@@ -113,6 +114,11 @@ export function NewPaletteForm(props) {
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const removeColorBox = colorName => {
+    const updatedColors = colors.filter(({ name }) => name !== colorName);
+    setColors(updatedColors);
   };
 
   return (
@@ -220,7 +226,12 @@ export function NewPaletteForm(props) {
       >
         <div className={classes.drawerHeader} />
         {colors.map((c, i) => (
-          <DraggableColorBox key={i} color={c.color} name={c.name} />
+          <DraggableColorBox
+            removeColorBox={removeColorBox}
+            key={c.name}
+            color={c.color}
+            name={c.name}
+          />
         ))}
       </main>
     </div>
