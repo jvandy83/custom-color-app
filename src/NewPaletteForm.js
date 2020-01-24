@@ -13,8 +13,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
-import DraggableColorBox from './DraggableColorBox';
+import DraggableColorList from './DraggableColorList';
 import useFormValidation from './hooks/useFormValidation';
+import { arrayMove } from 'react-sortable-hoc';
 
 const drawerWidth = 360;
 
@@ -121,6 +122,10 @@ export function NewPaletteForm(props) {
     setColors(updatedColors);
   };
 
+  const onSortEnd = ({ oldIndex, newIndex }) => {
+    setColors(prevColors => arrayMove(prevColors, oldIndex, newIndex));
+  };
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -225,14 +230,12 @@ export function NewPaletteForm(props) {
         })}
       >
         <div className={classes.drawerHeader} />
-        {colors.map((c, i) => (
-          <DraggableColorBox
-            removeColorBox={removeColorBox}
-            key={c.name}
-            color={c.color}
-            name={c.name}
-          />
-        ))}
+        <DraggableColorList
+          colors={colors}
+          removeColorBox={removeColorBox}
+          axis="xy"
+          onSortEnd={onSortEnd}
+        />
       </main>
     </div>
   );
