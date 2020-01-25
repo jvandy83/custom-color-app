@@ -7,7 +7,7 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     colorName: '',
     paletteName: ''
   });
-  const [colors, setColors] = React.useState([]);
+  const [colors, setColors] = React.useState(palettes[0].colors);
   const [errors, setErrors] = React.useState({});
   const [submittingColor, setSubmittingColor] = React.useState(false);
   const [submittingPalette, setSubmittingPalette] = React.useState(false);

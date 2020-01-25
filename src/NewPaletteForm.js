@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
 import DraggableColorList from './DraggableColorList';
-import useFormValidation from './hooks/useFormValidation';
+import useForm from './hooks/useForm';
 import { arrayMove } from 'react-sortable-hoc';
 
 const drawerWidth = 360;
@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => ({
 export function NewPaletteForm(props) {
   const classes = useStyles();
 
-  const { savePalette, history, seedColors } = props;
+  const { savePalette, history, seedColors, maxColors } = props;
 
   const [currentColor, setCurrentColor] = useState('teal');
 
@@ -103,7 +103,7 @@ export function NewPaletteForm(props) {
     setColors,
     colors,
     handlePaletteSubmit
-  } = useFormValidation(currentColor, seedColors, history, savePalette);
+  } = useForm(currentColor, seedColors, history, savePalette);
 
   const updateCurrentColor = newColor => {
     setCurrentColor(newColor.hex);
@@ -125,6 +125,17 @@ export function NewPaletteForm(props) {
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setColors(prevColors => arrayMove(prevColors, oldIndex, newIndex));
   };
+
+  const randomColor = () => {
+    let letters = '0123456789abcdef';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    setColors([...colors, { color: color, name: '' }]);
+  };
+
+  const paletteIsFull = colors.length === maxColors;
 
   return (
     <div className={classes.root}>
@@ -188,10 +199,19 @@ export function NewPaletteForm(props) {
         <Divider />
         <Typography variant="h4">Design Your Palette</Typography>
         <div>
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setColors([])}
+          >
             Clear Palette
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={randomColor}
+            disabled={paletteIsFull}
+          >
             Random Color
           </Button>
         </div>
@@ -213,8 +233,14 @@ export function NewPaletteForm(props) {
             }
             required
           />
-          <Button type="submit" variant="contained" color="primary">
-            Add Color
+          <Button
+            style={{ backgroundColor: paletteIsFull ? 'grey' : currentColor }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={paletteIsFull}
+          >
+            {paletteIsFull ? 'Full pallete' : 'Add Color'}
           </Button>
           {errors.isColorUnique && (
             <span className={classes.error}>{errors.isColorUnique}</span>

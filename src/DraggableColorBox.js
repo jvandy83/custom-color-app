@@ -7,7 +7,7 @@ const styles = {
   root: {
     display: 'inline-block',
     position: 'relative',
-    marginBottom: '-3px',
+    marginBottom: '-5px',
     cursor: 'pointer',
     margin: '0 auto',
     height: '25%',
