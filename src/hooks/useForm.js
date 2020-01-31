@@ -11,6 +11,8 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
   const [errors, setErrors] = React.useState({});
   const [submittingColor, setSubmittingColor] = React.useState(false);
   const [submittingPalette, setSubmittingPalette] = React.useState(false);
+  const [emoji, setEmoji] = React.useState('');
+  const [submittingEmoji, setSubmittingEmoji] = React.useState(false);
 
   React.useEffect(() => {
     function addNewColor() {
@@ -22,11 +24,16 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
       setValues({
         colorName: ''
       });
-    } else if (submittingPalette && Object.keys(errors).length === 0) {
+    } else if (
+      submittingPalette &&
+      Object.keys(errors).length === 0 &&
+      submittingEmoji
+    ) {
       const newPalette = {
         paletteName: values.paletteName,
         id: values.paletteName.toLowerCase().replace(/ /g, '-'),
-        colors
+        colors,
+        emoji
       };
       savePalette(newPalette);
       setSubmittingPalette(false);
@@ -37,6 +44,7 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     } else {
       setSubmittingPalette(false);
       setSubmittingColor(false);
+      setSubmittingEmoji(false);
     }
   }, [
     errors,
@@ -45,8 +53,10 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     currentColor,
     values,
     submittingPalette,
+    submittingEmoji,
     savePalette,
-    history
+    history,
+    emoji
   ]);
 
   function handleChange(e) {
@@ -62,11 +72,14 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     setSubmittingColor(true);
   };
 
-  const handlePaletteSubmit = e => {
-    e.preventDefault();
+  const handlePaletteSubmit = () => {
     setErrors(paletteValidator);
+  };
+
+  const handleEmojiSubmit = emojiString => {
     setSubmittingPalette(true);
-    console.log(palettes);
+    setEmoji(emojiString);
+    setSubmittingEmoji(true);
   };
 
   function colorValidator() {
@@ -84,9 +97,10 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
   return {
     handleChange,
     handleColorSubmit,
+    handleEmojiSubmit,
+    handlePaletteSubmit,
     values,
     errors,
-    handlePaletteSubmit,
     colors,
     setColors
   };
