@@ -19,15 +19,17 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
       setColors([...colors, { color: currentColor, name: values.colorName }]);
     }
     if (submittingColor && Object.keys(errors).length === 0) {
-      addNewColor();
-      setSubmittingColor(false);
-      setValues({
-        colorName: ''
-      });
+      return () => {
+        addNewColor();
+        setValues({
+          colorName: ''
+        });
+        setSubmittingColor(false);
+      };
     } else if (
       submittingPalette &&
-      Object.keys(errors).length === 0 &&
-      submittingEmoji
+      submittingEmoji &&
+      Object.keys(errors).length === 0
     ) {
       const newPalette = {
         paletteName: values.paletteName,
@@ -36,15 +38,12 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
         emoji
       };
       savePalette(newPalette);
-      setSubmittingPalette(false);
       setValues({
         paletteName: ''
       });
-      history.push('/');
-    } else {
       setSubmittingPalette(false);
-      setSubmittingColor(false);
       setSubmittingEmoji(false);
+      history.push('/');
     }
   }, [
     errors,
@@ -69,17 +68,20 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
   const handleColorSubmit = e => {
     e.preventDefault();
     setErrors(colorValidator);
+    console.log(errors);
     setSubmittingColor(true);
   };
 
-  const handlePaletteSubmit = () => {
+  const handlePaletteSubmit = event => {
+    event.preventDefault();
     setErrors(paletteValidator);
+    setSubmittingPalette(true);
   };
 
   const handleEmojiSubmit = emojiString => {
     setSubmittingPalette(true);
-    setEmoji(emojiString);
     setSubmittingEmoji(true);
+    setEmoji(emojiString);
   };
 
   function colorValidator() {
@@ -99,6 +101,8 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     handleColorSubmit,
     handleEmojiSubmit,
     handlePaletteSubmit,
+    submittingEmoji,
+    submittingPalette,
     values,
     errors,
     colors,

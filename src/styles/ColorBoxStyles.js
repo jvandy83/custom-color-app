@@ -48,7 +48,7 @@ export default {
     textDecoration: 'none',
     marginTop: '-0.9rem',
     position: 'absolute',
-    marginLeft: '-3rem',
+    // marginLeft: '-3rem',
     lineHeight: '1.8rem',
     textEmphasis: 'none',
     textAlign: 'center',
@@ -56,7 +56,6 @@ export default {
     fontSize: '1rem',
     height: '1.8rem',
     outline: 'none',
-    // color: 'white',
     border: 'none',
     width: '6rem',
     left: '50%',
@@ -76,21 +75,6 @@ export default {
     bottom: '0',
     left: '0'
   },
-  // copyMessage: {
-  //   justifyContent: 'center',
-  //   flexDirection: 'column',
-  //   transform: 'scale(0.1)',
-  //   alignItems: 'center',
-  //   position: 'fixed',
-  //   fontSize: '4rem',
-  //   display: 'flex',
-  //   color: 'white',
-  //   opacity: '0',
-  //   bottom: '0',
-  //   right: '0',
-  //   left: '0',
-  //   top: '0'
-  // },
   copyOverlay: {
     opacity: '0',
     zIndex: '0',

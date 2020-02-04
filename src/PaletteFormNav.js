@@ -1,5 +1,6 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,81 +8,30 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import FormDialog from './FormDialog';
 import clsx from 'clsx';
-
-const drawerWidth = 400;
-
-const useStyles = makeStyles(theme => ({
-  nav: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    backgroundColor: 'black'
-    // color: '#eeeee'
-  },
-  paletteInput: {
-    // display: 'flex'
-    display: 'inline-block',
-    margin: '0 6rem'
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    '& div': {
-      justifyContent: 'flex-end'
-    }
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  hide: {
-    display: 'none'
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  error: {
-    color: 'red',
-    display: 'inline-block',
-    textDecoration: 'none'
-  },
-  btn: {
-    display: 'inline-block'
-  },
-  input: {
-    paddingBottom: '.5rem',
-    outline: 'none',
-    lineHeight: '1.4rem',
-    fontSize: '1.3rem',
-    boxShadow: 'inset 1px 2px 5px rgba(0, 0, 0, 0.5)',
-    background: '#fff',
-    color: '#525865',
-    borderRadius: '.1rem'
-    // border: '1px solid #d1d1d1'
-  }
-}));
+import { useStyles } from './styles/PaletteFormNavStyles';
 
 const PaletteFormNav = ({
   open,
   handleEmojiSubmit,
   handlePaletteSubmit,
+  submittingPalette,
+  submittingEmoji,
   handleDrawerOpen,
+  history,
   errors,
   handleChange,
   values
 }) => {
   const classes = useStyles();
+
+  const [openPalette, setOpenPalette] = useState(false);
+
+  const openPaletteModal = () => {
+    setOpenPalette(true);
+  };
+
   return (
-    <div className={classes.container}>
+    <div>
       <CssBaseline />
       <AppBar
         position="absolute"
@@ -90,23 +40,50 @@ const PaletteFormNav = ({
         })}
       >
         <Toolbar className={classes.nav}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
+          <div className={classes.menuButton}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+          <div className={classes.btnContainer}>
+            <Link style={{ textDecoration: 'none' }} to="/">
+              <Button
+                className={classes.goBack}
+                variant="contained"
+                color="secondary"
+                type="submit"
+              >
+                Go Back
+              </Button>
+            </Link>
+            <Button
+              className={classes.addPalette}
+              onClick={openPaletteModal}
+              variant="outlined"
+              color="primary"
+            >
+              Add Palette
+            </Button>
+          </div>
           <FormDialog
-            handleEmojiSubmit={handleEmojiSubmit}
             handleDrawerOpen={handleDrawerOpen}
+            handleEmojiSubmit={handleEmojiSubmit}
             handlePaletteSubmit={handlePaletteSubmit}
+            submittingPalette={submittingPalette}
+            submittingEmoji={submittingEmoji}
+            history={history}
             errors={errors}
-            drawerWidth={drawerWidth}
             handleChange={handleChange}
             values={values}
+            openPalette={openPalette}
+            setOpenPalette={setOpenPalette}
+            openPaletteModal={openPaletteModal}
           />
         </Toolbar>
       </AppBar>
