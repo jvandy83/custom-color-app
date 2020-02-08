@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
   paletteModal: {
-    padding: '2rem',
+    padding: '1.5rem',
     backgroundColor: 'rgba(0, 0, 0, 0.1)'
   },
   error: {

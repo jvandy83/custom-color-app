@@ -7,9 +7,25 @@ export default {
     position: 'relative',
     overflow: 'hidden',
     boxShadow: '2px 2px 10px rgb(0, 0, 0, 0.5)',
-    '&:hover': {
-      cursor: 'pointer'
+    cursor: 'pointer',
+    '&:hover svg': {
+      opacity: 1
     }
+  },
+  deleteOverlay: {},
+  deleteIcon: {
+    position: 'absolute',
+    display: 'flex',
+    width: '15%',
+    height: '15%',
+    top: 0,
+    right: 0,
+    opacity: 0,
+    backgroundColor: '#d11a2a',
+    transition: 'all 0.3s ease-in-out',
+    zIndex: 10,
+    margin: 'auto',
+    color: 'white'
   },
   colors: {
     background: 'white',

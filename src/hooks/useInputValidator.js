@@ -1,13 +1,13 @@
 import React from 'react';
-import validateColor from './validateColor';
-import validatePaletteName from './validatePaletteName';
+import validateColor from './colorInputValidator';
+import validatePaletteName from './paletteInputValidator';
 
 function useFormValidation(currentColor, palettes, history, savePalette) {
   const [values, setValues] = React.useState({
     colorName: '',
     paletteName: ''
   });
-  const [colors, setColors] = React.useState(palettes[0].colors);
+  const [colors, setColors] = React.useState([]);
   const [errors, setErrors] = React.useState({});
   const [submittingColor, setSubmittingColor] = React.useState(false);
   const [submittingPalette, setSubmittingPalette] = React.useState(false);
@@ -19,13 +19,11 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
       setColors([...colors, { color: currentColor, name: values.colorName }]);
     }
     if (submittingColor && Object.keys(errors).length === 0) {
-      return () => {
-        addNewColor();
-        setValues({
-          colorName: ''
-        });
-        setSubmittingColor(false);
-      };
+      addNewColor();
+      setValues({
+        colorName: ''
+      });
+      setSubmittingColor(false);
     } else if (
       submittingPalette &&
       submittingEmoji &&
@@ -68,7 +66,6 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
   const handleColorSubmit = e => {
     e.preventDefault();
     setErrors(colorValidator);
-    console.log(errors);
     setSubmittingColor(true);
   };
 
@@ -105,6 +102,7 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
     submittingPalette,
     values,
     errors,
+    setErrors,
     colors,
     setColors
   };

@@ -10,7 +10,7 @@ export default {
   goBack: {
     display: 'inline-block',
     position: 'relative',
-    marginBottom: '-.33rem',
+    marginBottom: '-3px',
     cursor: 'pointer',
     margin: '0 auto',
     width: '20%',

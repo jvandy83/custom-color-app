@@ -8,20 +8,25 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { ChromePicker } from 'react-color';
 import clsx from 'clsx';
 import DraggableColorList from './DraggableColorList';
-import useForm from './hooks/useForm';
-import { arrayMove } from 'react-sortable-hoc';
+import useForm from './hooks/useInputValidator';
+import arrayMove from 'array-move';
 import { useStyles } from './styles/NewPaletteFormStyles';
+import useRandomColorValidator from './hooks/useRandomColorValidator';
 
 const drawerWidth = 400;
 
-export default function NewPaletteForm(props) {
+export default function NewPaletteForm({
+  savePalette,
+  history,
+  seedColors,
+  maxColors,
+  starterPalette
+}) {
   const classes = useStyles();
 
   const [currentColor, setCurrentColor] = useState('teal');
 
   const [open, setOpen] = useState(false);
-
-  const { savePalette, history, seedColors, maxColors } = props;
 
   const {
     handleChange,
@@ -56,13 +61,11 @@ export default function NewPaletteForm(props) {
     setColors(prevColors => arrayMove(prevColors, oldIndex, newIndex));
   };
 
-  const randomColor = () => {
-    let allPalettes = seedColors.flatMap(({ colors }) => {
-      return colors;
-    });
-    let rand = Math.floor(Math.random() * allPalettes.length + 1);
-    setColors([...colors, allPalettes[rand]]);
-  };
+  const { validateRandomColor, colorErrors } = useRandomColorValidator(
+    starterPalette,
+    colors,
+    setColors
+  );
 
   const paletteIsFull = colors.length === maxColors;
 
@@ -109,11 +112,18 @@ export default function NewPaletteForm(props) {
           <Button
             variant="contained"
             color="primary"
-            onClick={randomColor}
+            onClick={validateRandomColor}
             disabled={paletteIsFull}
           >
             Random Color
           </Button>
+          {colorErrors.isRandomColorUnique && (
+            <div>
+              <span style={{ color: 'red' }}>
+                {colorErrors.isRandomColorUnique}
+              </span>
+            </div>
+          )}
           <ChromePicker
             className={classes.colorPicker}
             color={currentColor}

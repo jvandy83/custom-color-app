@@ -29,7 +29,6 @@ class ColorBox extends Component {
       moreUrl,
       showingFullPalette
     } = this.props;
-    console.log(this.props);
     const { copied } = this.state;
     return (
       <CopyToClipboard text={background} onCopy={this.changeCopyState}>

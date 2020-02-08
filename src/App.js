@@ -10,16 +10,34 @@ import { generatePalette } from './colorHelper';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { palettes: seedColors };
+    const savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
+    this.state = { palettes: savedPalettes || seedColors };
   }
+
+  savePalette = newPalette => {
+    this.setState(
+      { palettes: [...this.state.palettes, newPalette] },
+      this.syncLocalStorage
+    );
+  };
+
   findPalette = id => {
     return this.state.palettes.find(palette => {
       return palette.id === id;
     });
   };
 
-  savePalette = newPalette => {
-    this.setState({ palettes: [...this.state.palettes, newPalette] });
+  syncLocalStorage = () => {
+    window.localStorage.setItem(
+      'palettes',
+      JSON.stringify(this.state.palettes)
+    );
+  };
+
+  deletePaletteLocalStorage = id => {
+    let paletteArray = JSON.parse(localStorage.getItem('palettes'));
+    let updatedPalette = paletteArray.filter(p => p.id !== id);
+    this.setState({ palettes: updatedPalette }, this.syncLocalStorage);
   };
 
   render() {
@@ -31,6 +49,7 @@ class App extends Component {
           render={routeProps => (
             <NewPaletteForm
               maxColors={20}
+              starterPalette={seedColors}
               seedColors={this.state.palettes}
               savePalette={this.savePalette}
               {...routeProps}
@@ -41,7 +60,11 @@ class App extends Component {
           exact
           path="/"
           render={routeProps => (
-            <PaletteList palettes={this.state.palettes} {...routeProps} />
+            <PaletteList
+              deletePalette={this.deletePaletteLocalStorage}
+              palettes={this.state.palettes}
+              {...routeProps}
+            />
           )}
         />
         <Route

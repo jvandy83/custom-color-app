@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart';
-import Button from '@material-ui/core/Button';
 
 export const PickerModal = ({ handleEmojiSubmit }) => {
   // const [emoji, setEmoji] = React.useState('');

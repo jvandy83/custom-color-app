@@ -14,7 +14,6 @@ export default function FormDialog({
   handlePaletteSubmit,
   submittingPalette,
   submittingEmoji,
-  history,
   openPalette,
   setOpenPalette
 }) {
