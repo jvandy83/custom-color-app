@@ -17,6 +17,8 @@ const PaletteFormNav = ({
   submittingPalette,
   submittingEmoji,
   handleDrawerOpen,
+  setShowNavButtons,
+  showNavButtons,
   history,
   errors,
   handleChange,
@@ -30,6 +32,10 @@ const PaletteFormNav = ({
     setOpenPalette(true);
   };
 
+  const handleHideNavButtons = () => {
+    setShowNavButtons(false);
+  };
+
   return (
     <div>
       <CssBaseline />
@@ -40,7 +46,7 @@ const PaletteFormNav = ({
         })}
       >
         <Toolbar className={classes.nav}>
-          <div className={classes.menuButton}>
+          <div onClick={handleHideNavButtons} className={classes.menuButton}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -51,7 +57,10 @@ const PaletteFormNav = ({
               <MenuIcon />
             </IconButton>
           </div>
-          <div className={classes.btnContainer}>
+          <div
+            style={{ display: showNavButtons ? 'block' : 'none' }}
+            className={classes.btnContainer}
+          >
             <Link style={{ textDecoration: 'none' }} to="/">
               <Button
                 className={classes.goBack}

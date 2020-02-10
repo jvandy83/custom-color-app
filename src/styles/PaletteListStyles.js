@@ -1,4 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
+import sizes from './sizes';
+import bg from './newBg.svg';
 
 const useStyles = makeStyles({
   root: {
@@ -6,14 +8,32 @@ const useStyles = makeStyles({
     height: '100vh',
     display: 'flex',
     alignItems: 'flex-start',
-    justifyContent: 'center'
+    // flexWrap: 'wrap',
+    justifyContent: 'center',
+    backgroundColor: '#5d7ab9',
+    backgroundAttachment: 'fixed',
+    backgroundSize: 'cover',
+    backgroundImage: `url(${bg})`
   },
   container: {
     width: '50%',
     display: 'flex',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    flexWrap: 'wrap'
+    [sizes.down('lg')]: {
+      width: '55%'
+    },
+    [sizes.down('med')]: {
+      width: '60%'
+      // alignItems: 'center'
+    },
+    [sizes.down('sm')]: {
+      width: '65%'
+    },
+    [sizes.down('xs')]: {
+      alignItems: 'center',
+      width: '45%'
+    }
   },
   nav: {
     display: 'flex',
@@ -23,6 +43,17 @@ const useStyles = makeStyles({
     color: 'white',
     '& a': {
       color: 'white'
+    },
+    [sizes.down('xs')]: {}
+  },
+  logo: {
+    [sizes.down('xs')]: {
+      width: '60px'
+    }
+  },
+  createPaletteLink: {
+    [sizes.down('xs')]: {
+      width: '50px'
     }
   },
   palettes: {
@@ -30,7 +61,16 @@ const useStyles = makeStyles({
     width: '100%',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
-    gridGap: '5%'
+    gridGap: '5%',
+    [sizes.down('sm')]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 50%)'
+    },
+    [sizes.down('xs')]: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(1, 100%)',
+      gridGap: '1rem'
+    }
   }
 });
 

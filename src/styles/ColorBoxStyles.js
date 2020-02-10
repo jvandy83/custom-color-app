@@ -7,19 +7,20 @@ export default {
     position: 'relative',
     marginBottom: '-3.5px',
     cursor: 'pointer',
-    margin: '0 auto',
+    margin: '0',
     height: props => (props.showingFullPalette ? '25%' : '50%'),
     width: '20%',
     '&:hover button': {
       opacity: '1'
     },
-    [sizes.down('lg')]: {
-      width: '20%',
-      height: props => (props.showingFullPalette ? '25%' : '50%')
-    },
+    // [sizes.down('lg')]: {
+    //   width: '20%',
+    //   height: props => (props.showingFullPalette ? '25%' : '50%')
+    // },
     [sizes.down('sm')]: {
       width: '50%',
-      height: props => (props.showingFullPalette ? '10%' : '20%')
+      height: props => (props.showingFullPalette ? '10%' : '20%'),
+      marginBottom: '-3.8px'
     },
     [sizes.down('xs')]: {
       width: '100%',

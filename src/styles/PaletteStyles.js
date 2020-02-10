@@ -1,6 +1,9 @@
+import sizes from './sizes';
+
 export default {
   Palette: {
     height: '100vh',
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -17,6 +20,17 @@ export default {
     opacity: 1,
     background: 'black',
     height: '50%',
+    [sizes.down('sm')]: {
+      width: '50%',
+      height: '20%',
+      marginBottom: '-3.8px'
+    },
+    [sizes.down('xs')]: {
+      position: 'relative',
+      height: '10%',
+      width: '100%'
+      // display: 'block'
+    },
     '& a': {
       width: '6rem',
       height: '1.8rem',

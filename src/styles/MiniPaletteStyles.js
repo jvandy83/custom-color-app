@@ -53,6 +53,6 @@ export default {
     display: 'inline-block',
     margin: '0 auto',
     postition: 'relative',
-    marginBottom: '-3.5px'
+    marginBottom: '-3.8px'
   }
 };

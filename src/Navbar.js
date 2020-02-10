@@ -16,10 +16,12 @@ class Navbar extends Component {
     super();
     this.state = {
       format: 'hex',
-      open: false
+      open: false,
+      showDropdown: false
     };
     this.handleFormatChange = this.handleFormatChange.bind(this);
     this.closeSnackbar = this.closeSnackbar.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
   handleFormatChange(e) {
@@ -29,9 +31,16 @@ class Navbar extends Component {
     });
     this.props.handleChange(e.target.value);
   }
+
   closeSnackbar() {
     this.setState({
       open: false
+    });
+  }
+
+  toggleDropdown() {
+    this.setState({
+      showDropdown: !this.state.showDropdown
     });
   }
 
@@ -45,7 +54,7 @@ class Navbar extends Component {
         </div>
         {showSlider && (
           <div>
-            <span>Level: {level} </span>
+            <span className={classes.levelTitle}>Level: {level} </span>
             <div className={classes.slider}>
               <Slider
                 defaultValue={level}
@@ -55,10 +64,57 @@ class Navbar extends Component {
                 onAfterChange={ChangeLevel}
               />
             </div>
+            <div>
+              <div
+                style={{ display: this.state.showDropdown ? 'block' : 'none' }}
+                className={classes.mobileMenuContainer}
+              >
+                <div>
+                  <Select
+                    style={{
+                      display: this.state.showDropdown ? 'block' : 'none'
+                    }}
+                    // disableUnderline
+                    value={format}
+                    onChange={this.handleFormatChange}
+                  >
+                    <MenuItem value="hex">HEX - #ffffff</MenuItem>
+                    <MenuItem value="rgb">RGB - rgb(255, 255, 255)</MenuItem>
+                    <MenuItem value="rgba">
+                      RGBA - rgba(255, 255, 255, 1.0)
+                    </MenuItem>
+                  </Select>
+                </div>
+                <div
+                  className={classes.mobileSlider}
+                  style={{
+                    display: this.state.showDropdown ? 'block' : 'none'
+                  }}
+                >
+                  <Slider
+                    defaultValue={level}
+                    step={100}
+                    min={100}
+                    max={900}
+                    onAfterChange={ChangeLevel}
+                  />
+                </div>
+              </div>
+              <button
+                onClick={this.toggleDropdown}
+                className={classes.menuButton}
+              >
+                Menu
+              </button>
+            </div>
           </div>
         )}
         <div className={classes.selectContainer}>
-          <Select value={format} onChange={this.handleFormatChange}>
+          <Select
+            disableUnderline
+            value={format}
+            onChange={this.handleFormatChange}
+          >
             <MenuItem value="hex">HEX - #ffffff</MenuItem>
             <MenuItem value="rgb">RGB - rgb(255, 255, 255)</MenuItem>
             <MenuItem value="rgba">RGBA - rgba(255, 255, 255, 1.0)</MenuItem>
@@ -67,12 +123,13 @@ class Navbar extends Component {
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           open={this.state.open}
+          key={format}
           message={
             <span id="message-id">
-              Format Changed To {format.toUpperCase()}{' '}
+              Format Changed To {format.toUpperCase()}
             </span>
           }
-          hideDuration={3000}
+          autoHideDuration={3000}
           ContentProps={{
             'aria-describedby': 'message-id'
           }}

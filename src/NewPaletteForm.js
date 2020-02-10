@@ -52,6 +52,13 @@ export default function NewPaletteForm({
     setOpen(false);
   };
 
+  const [showNavButtons, setShowNavButtons] = useState(true);
+
+  const handleShowNavButtons = () => {
+    handleDrawerClose();
+    setShowNavButtons(true);
+  };
+
   const removeColorBox = col => {
     const updatedColors = colors.filter(({ color }) => color !== col);
     setColors(updatedColors);
@@ -79,6 +86,9 @@ export default function NewPaletteForm({
         submittingPalette={submittingPalette}
         submittingEmoji={submittingEmoji}
         handleDrawerOpen={handleDrawerOpen}
+        handleShowNavButtons={handleShowNavButtons}
+        setShowNavButtons={setShowNavButtons}
+        showNavButtons={showNavButtons}
         errors={errors}
         drawerWidth={drawerWidth}
         handleChange={handleChange}
@@ -95,7 +105,7 @@ export default function NewPaletteForm({
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleShowNavButtons}>
             <ChevronRightIcon />
           </IconButton>
         </div>
