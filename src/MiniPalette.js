@@ -16,13 +16,17 @@ function MiniPalette({
   id
 }) {
   const [open, setOpen] = useState(false);
+  const [exit, setExit] = useState(true);
+  const [deletingPalette, setDeletingPalette] = useState(false);
 
   const close = () => {
     setOpen(false);
   };
 
   const handleDelete = () => {
-    deletePalette(id);
+    setOpen(false);
+    setDeletingPalette(true);
+    return setExit(false), setTimeout(() => setExit(true), 1000);
   };
 
   const handleOpenModal = e => {
@@ -34,6 +38,12 @@ function MiniPalette({
     goToPalette(id);
   };
 
+  React.useEffect(() => {
+    if (exit && deletingPalette) {
+      deletePalette(id);
+    }
+  }, [exit, deletePalette, deletingPalette, id]);
+
   const miniColorBoxes = colors.map((color, i) => (
     <div
       key={i}
@@ -42,7 +52,7 @@ function MiniPalette({
     ></div>
   ));
   return (
-    <div className="container">
+    <div>
       <Dialog open={open} onClose={close}>
         <DialogTitle>Are you sure?</DialogTitle>
         <Button onClick={handleDelete} vaiant="contained" color="secondary">
@@ -52,9 +62,12 @@ function MiniPalette({
           Cancel
         </Button>
       </Dialog>
-      <div className={classes.root} onClick={handleLink}>
+      <div
+        className={!exit ? classes.rootFadeExit : classes.root}
+        onClick={handleLink}
+      >
         <div
-          onClickCapture={e => handleOpenModal(e)}
+          onClick={e => handleOpenModal(e)}
           className={classes.deleteOverlay}
         >
           <DeleteForeverIcon className={classes.deleteIcon}>

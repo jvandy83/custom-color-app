@@ -4,19 +4,15 @@ import sizes from './sizes';
 export default {
   ColorBox: {
     display: 'inline-block',
-    position: 'relative',
     marginBottom: '-3.5px',
     cursor: 'pointer',
+    position: 'relative',
     margin: '0',
     height: props => (props.showingFullPalette ? '25%' : '50%'),
     width: '20%',
     '&:hover button': {
       opacity: '1'
     },
-    // [sizes.down('lg')]: {
-    //   width: '20%',
-    //   height: props => (props.showingFullPalette ? '25%' : '50%')
-    // },
     [sizes.down('sm')]: {
       width: '50%',
       height: props => (props.showingFullPalette ? '10%' : '20%'),
@@ -61,8 +57,8 @@ export default {
     display: 'inline-block',
     textDecoration: 'none',
     marginTop: '-0.9rem',
-    position: 'absolute',
     marginLeft: '-3rem',
+    position: 'absolute',
     lineHeight: '1.8rem',
     textEmphasis: 'none',
     textAlign: 'center',
@@ -74,7 +70,7 @@ export default {
     width: '6rem',
     left: '50%',
     top: '50%',
-    opacity: '0',
+    opacity: 0,
     color: props =>
       chroma(props.background).luminance() >= 0.7 ? 'black' : 'white'
   },
@@ -86,12 +82,12 @@ export default {
     padding: '0.6rem',
     color: 'black',
     width: '100%',
-    bottom: '0',
-    left: '0'
+    bottom: 0,
+    left: 0
   },
   copyOverlay: {
-    opacity: '0',
-    zIndex: '0',
+    opacity: 0,
+    zIndex: 0,
     width: '100%',
     height: '100%',
     transition: 'transform 0.6 ease-in-out',
@@ -101,7 +97,10 @@ export default {
     opacity: '1',
     transform: 'scale(50)',
     zIndex: '10',
-    position: 'absolute'
+    position: 'absolute',
+    [sizes.down('xs')]: {
+      transform: 'scale(1)'
+    }
   },
   copyMessage: {
     position: 'fixed',
@@ -125,11 +124,22 @@ export default {
       textAlign: 'center',
       marginBottom: '0',
       padding: '1rem',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      [sizes.down('xs')]: {
+        background: 'rgba(255, 255, 255, 0)',
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }
     },
     '& p': {
       fontSize: '2rem',
-      fontWeight: '200'
+      fontWeight: '200',
+      [sizes.down('xs')]: {
+        fontSize: '2.5rem',
+        fontWeight: '300'
+      }
     }
   },
   showMessage: {
@@ -137,6 +147,9 @@ export default {
     transform: 'scale(1)',
     zIndex: '25',
     transition: 'all 0.4s ease-in-out',
-    transitionDelay: '0.3s'
+    transitionDelay: '0.3s',
+    [sizes.down('xs')]: {
+      transform: 'scale(.5)'
+    }
   }
 };

@@ -5,13 +5,14 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { ChromePicker } from 'react-color';
 import clsx from 'clsx';
 import DraggableColorList from './DraggableColorList';
 import useForm from './hooks/useInputValidator';
 import arrayMove from 'array-move';
+import { ChromePicker } from 'react-color';
 import { useStyles } from './styles/NewPaletteFormStyles';
-import useRandomColorValidator from './hooks/useRandomColorValidator';
+import { useRandomColorValidator } from './hooks/useRandomColorValidator';
+import { useWindowSize } from './hooks/useWindowSize';
 
 const drawerWidth = 400;
 
@@ -23,6 +24,7 @@ export default function NewPaletteForm({
   starterPalette
 }) {
   const classes = useStyles();
+  const size = useWindowSize();
 
   const [currentColor, setCurrentColor] = useState('teal');
 
@@ -45,36 +47,58 @@ export default function NewPaletteForm({
     setCurrentColor(newColor.hex);
   };
 
+  const [hideNavButtons, setHideNavButtons] = useState(false);
+
   const handleDrawerOpen = () => {
-    setOpen(true);
+    if (size.width < 800) {
+      setHideNavButtons(true);
+      setOpen(true);
+    } else {
+      setOpen(true);
+    }
   };
+
   const handleDrawerClose = () => {
+    setHideNavButtons(false);
     setOpen(false);
   };
 
-  const [showNavButtons, setShowNavButtons] = useState(true);
-
-  const handleShowNavButtons = () => {
-    handleDrawerClose();
-    setShowNavButtons(true);
-  };
-
-  const removeColorBox = col => {
-    const updatedColors = colors.filter(({ color }) => color !== col);
-    setColors(updatedColors);
-  };
+  const removeColorBox = React.useCallback(
+    col => {
+      const updatedColors = colors.filter(({ color }) => color !== col);
+      setColors(updatedColors);
+    },
+    [colors, setColors]
+  );
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
     setColors(prevColors => arrayMove(prevColors, oldIndex, newIndex));
   };
 
-  const { validateRandomColor, colorErrors } = useRandomColorValidator(
+  const { randomColor, colorErrors } = useRandomColorValidator(
     starterPalette,
-    colors,
-    setColors
+    colors
   );
 
+  const [randomColorErrors, setRandomColorErrors] = useState({});
+
+  const randomColorErrorLength = Object.keys(randomColorErrors).length;
+
+  const generateRandomColor = () => {
+    setRandomColorErrors(colorErrors);
+    if (randomColorErrorLength === 0) {
+      setColors([...colors, randomColor]);
+    } else {
+      return resetErrors;
+    }
+  };
+
+  const reset = () => {
+    setRandomColorErrors({});
+  };
+
   const paletteIsFull = colors.length === maxColors;
+  const resetErrors = randomColorErrorLength > 0;
 
   return (
     <div className={classes.root}>
@@ -86,9 +110,7 @@ export default function NewPaletteForm({
         submittingPalette={submittingPalette}
         submittingEmoji={submittingEmoji}
         handleDrawerOpen={handleDrawerOpen}
-        handleShowNavButtons={handleShowNavButtons}
-        setShowNavButtons={setShowNavButtons}
-        showNavButtons={showNavButtons}
+        hideNavButtons={hideNavButtons}
         errors={errors}
         drawerWidth={drawerWidth}
         handleChange={handleChange}
@@ -105,7 +127,7 @@ export default function NewPaletteForm({
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleShowNavButtons}>
+          <IconButton onClick={handleDrawerClose}>
             <ChevronRightIcon />
           </IconButton>
         </div>
@@ -119,20 +141,30 @@ export default function NewPaletteForm({
           >
             Clear Palette
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={validateRandomColor}
-            disabled={paletteIsFull}
-          >
-            Random Color
-          </Button>
-          {colorErrors.isRandomColorUnique && (
+          {colorErrors.isRandomColorUnique ? (
             <div>
-              <span style={{ color: 'red' }}>
-                {colorErrors.isRandomColorUnique}
-              </span>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: 'grey',
+                  color: '#eeeeee',
+                  width: '100%'
+                }}
+                onClick={reset}
+              >
+                Reset
+              </Button>
+              <p style={{ color: 'red' }}>{colorErrors.isRandomColorUnique}</p>
             </div>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generateRandomColor}
+              disabled={resetErrors || paletteIsFull}
+            >
+              Random Color
+            </Button>
           )}
           <ChromePicker
             className={classes.colorPicker}

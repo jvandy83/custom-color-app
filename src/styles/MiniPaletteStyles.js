@@ -8,11 +8,24 @@ export default {
     overflow: 'hidden',
     boxShadow: '2px 2px 10px rgb(0, 0, 0, 0.5)',
     cursor: 'pointer',
+    opacity: 1,
     '&:hover svg': {
       opacity: 1
     }
   },
-  deleteOverlay: {},
+  rootFadeExit: {
+    border: '1px solid black',
+    backgroundColor: 'white',
+    borderRadius: '5px',
+    padding: '0.5rem',
+    position: 'relative',
+    overflow: 'hidden',
+    boxShadow: '2px 2px 10px rgb(0, 0, 0, 0.5)',
+    cursor: 'pointer',
+    transform: 'scale(0)',
+    opacity: '0.2',
+    transition: 'all 1s ease-out'
+  },
   deleteIcon: {
     position: 'absolute',
     display: 'flex',
@@ -53,6 +66,6 @@ export default {
     display: 'inline-block',
     margin: '0 auto',
     postition: 'relative',
-    marginBottom: '-3.8px'
+    marginBottom: '-8px'
   }
 };

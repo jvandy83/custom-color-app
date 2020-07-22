@@ -2,6 +2,7 @@ import React from 'react';
 import { SortableElement } from 'react-sortable-hoc';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { withStyles } from '@material-ui/styles';
+import chroma from 'chroma-js';
 import sizes from './styles/sizes';
 
 const styles = {
@@ -32,12 +33,16 @@ const styles = {
     position: 'absolute',
     fontSize: '0.8rem',
     padding: '0.6rem',
-    color: 'rgba(0, 0, 0, 0.5)',
+    // color: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
     bottom: '0',
     left: '0',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    color: props =>
+      chroma(props.color).luminance() <= 0.8
+        ? 'rgba(255, 255, 255, 0.8)'
+        : 'rgba(0, 0, 0, 0.6)'
   },
   deleteIcon: {
     transition: 'all 0.3s ease-in-out'

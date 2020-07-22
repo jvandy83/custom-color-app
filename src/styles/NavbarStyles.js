@@ -25,7 +25,6 @@ export default {
       display: 'block',
       backgroundColor: 'black',
       color: 'white',
-      // marginRight: '1rem',
       fontSize: '1.2rem',
       width: '8rem',
       padding: '0.5rem'
@@ -39,9 +38,6 @@ export default {
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    // [sizes.down('sm')]: {
-    //   width: '100%'
-    // },
     '& a': {
       textDecoration: 'none',
       color: 'black'
@@ -75,7 +71,6 @@ export default {
     top: 'calc(50% - 59px)',
     left: 'calc(50% - 129px)',
     zIndex: 30
-    // position: 'relative',
   },
   slider: {
     width: '30vw',

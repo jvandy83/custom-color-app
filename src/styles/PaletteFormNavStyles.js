@@ -9,7 +9,6 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: 'black'
   },
   paletteInput: {
-    // display: 'flex'
     display: 'inline-block',
     margin: '0 6rem'
   },
@@ -54,7 +53,6 @@ export const useStyles = makeStyles(theme => ({
     background: '#fff',
     color: '#525865',
     borderRadius: '.1rem'
-    // border: '1px solid #d1d1d1'
   },
   btnContainer: {
     width: '100%',

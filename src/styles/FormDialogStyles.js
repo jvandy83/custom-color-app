@@ -14,14 +14,12 @@ export const useStyles = makeStyles(theme => ({
     padding: '2rem 0'
   },
   input: {
-    paddingBottom: '.5rem',
     outline: 'none',
-    lineHeight: '1.4rem',
+    lineHeight: '1.4',
     fontSize: '1.3rem',
     boxShadow: 'inset 1px 2px 5px rgba(0, 0, 0, 0.5)',
     background: '#fff',
     color: '#525865',
     borderRadius: '.1rem'
-    // border: '1px solid #d1d1d1'
   }
 }));

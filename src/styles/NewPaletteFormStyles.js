@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import sizes from './sizes';
 const drawerWidth = 400;
 
 export const useStyles = makeStyles(theme => ({
@@ -54,16 +53,13 @@ export const useStyles = makeStyles(theme => ({
     textDecoration: 'none'
   },
   input: {
-    paddingBottom: '.5rem',
     outline: 'none',
-    lineHeight: '1.4rem',
+    lineHeight: '1.4',
     fontSize: '1.3rem',
     boxShadow: 'inset 1px 2px 5px rgba(0, 0, 0, 0.5)',
-    // background: '#fff',
     color: '#525865',
     borderRadius: '.1rem',
     width: '100%'
-    // border: '1px solid #d1d1d1'
   },
   addColorButton: {
     display: 'block',

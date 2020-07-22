@@ -4,11 +4,10 @@ import bg from './newBg.svg';
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: 'blue',
     height: '100vh',
     display: 'flex',
     alignItems: 'flex-start',
-    // flexWrap: 'wrap',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     backgroundColor: '#5d7ab9',
     backgroundAttachment: 'fixed',
@@ -25,7 +24,6 @@ const useStyles = makeStyles({
     },
     [sizes.down('med')]: {
       width: '60%'
-      // alignItems: 'center'
     },
     [sizes.down('sm')]: {
       width: '65%'
@@ -57,6 +55,7 @@ const useStyles = makeStyles({
     }
   },
   palettes: {
+    postition: 'fixed',
     boxSizing: 'border-box',
     width: '100%',
     display: 'grid',

@@ -1,13 +1,14 @@
 import React from 'react';
 import validateColor from './colorInputValidator';
 import validatePaletteName from './paletteInputValidator';
+import seedColors from '../SeedColor';
 
 function useFormValidation(currentColor, palettes, history, savePalette) {
   const [values, setValues] = React.useState({
     colorName: '',
     paletteName: ''
   });
-  const [colors, setColors] = React.useState([]);
+  const [colors, setColors] = React.useState(seedColors[0].colors);
   const [errors, setErrors] = React.useState({});
   const [submittingColor, setSubmittingColor] = React.useState(false);
   const [submittingPalette, setSubmittingPalette] = React.useState(false);
@@ -29,6 +30,7 @@ function useFormValidation(currentColor, palettes, history, savePalette) {
       submittingEmoji &&
       Object.keys(errors).length === 0
     ) {
+      setEmoji('');
       const newPalette = {
         paletteName: values.paletteName,
         id: values.paletteName.toLowerCase().replace(/ /g, '-'),
