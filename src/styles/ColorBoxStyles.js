@@ -8,29 +8,29 @@ export default {
     cursor: 'pointer',
     position: 'relative',
     margin: '0',
-    height: props => (props.showingFullPalette ? '25%' : '50%'),
+    height: (props) => (props.showingFullPalette ? '25%' : '50%'),
     width: '20%',
     '&:hover button': {
       opacity: '1'
     },
     [sizes.down('sm')]: {
       width: '50%',
-      height: props => (props.showingFullPalette ? '10%' : '20%'),
+      height: (props) => (props.showingFullPalette ? '10%' : '20%'),
       marginBottom: '-3.8px'
     },
     [sizes.down('xs')]: {
       width: '100%',
-      height: props => (props.showingFullPalette ? '5%' : '10%')
+      height: (props) => (props.showingFullPalette ? '5%' : '10%')
     }
   },
   copyText: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.65
         ? 'rgba(0,0,0,0.5)'
         : '#eeeeee'
   },
   colorName: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() <= 0.7
         ? '#eeeeee'
         : 'rgba(0,0,0,0.5)'
@@ -46,7 +46,7 @@ export default {
     textAlign: 'center',
     lineHeight: '2rem',
     textTransform: 'uppercase',
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.55
         ? 'rgba(0,0,0,0.5)'
         : '#eeeeee'
@@ -71,7 +71,7 @@ export default {
     left: '50%',
     top: '50%',
     opacity: 0,
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.7 ? 'black' : 'white'
   },
   boxContent: {

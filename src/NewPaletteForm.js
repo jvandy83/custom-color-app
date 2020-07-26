@@ -43,7 +43,7 @@ export default function NewPaletteForm({
     colors
   } = useForm(currentColor, seedColors, history, savePalette);
 
-  const updateCurrentColor = newColor => {
+  const updateCurrentColor = (newColor) => {
     setCurrentColor(newColor.hex);
   };
 
@@ -64,7 +64,7 @@ export default function NewPaletteForm({
   };
 
   const removeColorBox = React.useCallback(
-    col => {
+    (col) => {
       const updatedColors = colors.filter(({ color }) => color !== col);
       setColors(updatedColors);
     },
@@ -72,7 +72,7 @@ export default function NewPaletteForm({
   );
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    setColors(prevColors => arrayMove(prevColors, oldIndex, newIndex));
+    setColors((prevColors) => arrayMove(prevColors, oldIndex, newIndex));
   };
 
   const { randomColor, colorErrors } = useRandomColorValidator(
@@ -171,7 +171,7 @@ export default function NewPaletteForm({
             color={currentColor}
             onChangeComplete={updateCurrentColor}
           />
-          <form onSubmit={handleColorSubmit}>
+          <form autoComplete="off" onSubmit={handleColorSubmit}>
             <input
               placeholder="Color Name"
               className={classes.input}
