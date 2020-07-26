@@ -4,7 +4,7 @@ import bg from './newBg.svg';
 
 const useStyles = makeStyles({
   root: {
-    height: '100vh',
+    paddingBottom: '6rem',
     display: 'flex',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
