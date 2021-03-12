@@ -12,19 +12,20 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    const savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
+    let savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
+    savedPalettes = savedPalettes.length === 0 ? null : savedPalettes;
     this.state = { palettes: savedPalettes || seedColors };
   }
 
-  savePalette = newPalette => {
+  savePalette = (newPalette) => {
     this.setState(
       { palettes: [...this.state.palettes, newPalette] },
       this.syncLocalStorage
     );
   };
 
-  findPalette = id => {
-    return this.state.palettes.find(palette => {
+  findPalette = (id) => {
+    return this.state.palettes.find((palette) => {
       return palette.id === id;
     });
   };
@@ -40,13 +41,19 @@ class App extends Component {
     window.localStorage.clear();
   };
 
-  deletePaletteLocalStorage = id => {
+  deletePaletteLocalStorage = (id) => {
     let updatedPalette = null;
+    // check localStorage first
     let paletteArray = JSON.parse(localStorage.getItem('palettes'));
-    if (paletteArray) {
-      updatedPalette = paletteArray.filter(p => p.id !== id);
+    if (paletteArray.length) {
+      console.log('inside paletteArray "isTrue" if statement');
+      updatedPalette = paletteArray.filter((p) => p.id !== id);
     } else {
-      updatedPalette = seedColors.filter(p => p.id !== id);
+      console.log('inside seed db else statement');
+      // if localStorage is empty
+      // we know that the colors must
+      // be coming from our seed database
+      updatedPalette = seedColors.filter((p) => p.id !== id);
     }
     this.setState({ palettes: updatedPalette }, this.syncLocalStorage);
   };
@@ -69,7 +76,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/"
-                    render={routeProps => (
+                    render={(routeProps) => (
                       <PaletteList
                         deletePalette={this.deletePaletteLocalStorage}
                         palettes={this.state.palettes}
@@ -80,7 +87,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/palette/new"
-                    render={routeProps => (
+                    render={(routeProps) => (
                       <NewPaletteForm
                         maxColors={20}
                         starterPalette={seedColors}
@@ -94,7 +101,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/palette/:id"
-                    render={routeProps => (
+                    render={(routeProps) => (
                       <Palette
                         palette={generatePalette(
                           this.findPalette(routeProps.match.params.id)
@@ -105,7 +112,7 @@ class App extends Component {
                   <Route
                     exact
                     path="/palette/:paletteId/:colorId"
-                    render={routeProps => (
+                    render={(routeProps) => (
                       <SingleColorPalette
                         colorId={routeProps.match.params.colorId}
                         palette={generatePalette(

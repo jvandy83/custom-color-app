@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useStyles from './styles/PaletteListStyles';
 
 const PaletteList = ({ history, palettes, deletePalette }) => {
-  const goToPalette = id => {
+  const goToPalette = (id) => {
     history.push(`/palette/${id}`);
   };
 

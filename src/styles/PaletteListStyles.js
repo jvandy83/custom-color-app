@@ -2,8 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import sizes from './sizes';
 import bg from './newBg.svg';
 
-const useStyles = makeStyles({
+export default makeStyles({
   root: {
+    position: 'relative',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     paddingBottom: '6rem',
     display: 'flex',
     alignItems: 'flex-start',
@@ -12,7 +17,8 @@ const useStyles = makeStyles({
     backgroundColor: '#5d7ab9',
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
-    backgroundImage: `url(${bg})`
+    background: `url(${bg}) no-repeat center center fixed;`
+    // overflow: 'hidden'
   },
   container: {
     width: '50%',
@@ -72,5 +78,3 @@ const useStyles = makeStyles({
     }
   }
 });
-
-export default useStyles;
