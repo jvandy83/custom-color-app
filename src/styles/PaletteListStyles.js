@@ -4,12 +4,11 @@ import bg from './newBg.svg';
 
 export default makeStyles({
   root: {
-    position: 'relative',
+    position: 'fixed',
     top: 0,
-    left: 0,
-    right: 0,
     bottom: 0,
-    paddingBottom: '6rem',
+    right: 0,
+    left: 0,
     display: 'flex',
     alignItems: 'flex-start',
     flexWrap: 'wrap',
@@ -18,7 +17,6 @@ export default makeStyles({
     backgroundAttachment: 'fixed',
     backgroundSize: 'cover',
     background: `url(${bg}) no-repeat center center fixed;`
-    // overflow: 'hidden'
   },
   container: {
     width: '50%',

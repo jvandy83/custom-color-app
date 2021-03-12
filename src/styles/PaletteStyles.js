@@ -2,8 +2,13 @@ import sizes from './sizes';
 
 export default {
   Palette: {
-    height: '100vh',
-    position: 'relative',
+    // height: '100%',
+    // width: '100%',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    position: 'fixed',
     display: 'flex',
     flexDirection: 'column'
   },

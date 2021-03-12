@@ -1,9 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 const drawerWidth = 400;
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
-    boxSizing: 'border-box',
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     display: 'flex'
   },
   drawer: {
