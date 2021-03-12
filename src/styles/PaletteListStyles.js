@@ -5,6 +5,7 @@ import bg from './newBg.svg';
 export default makeStyles({
   root: {
     position: 'fixed',
+    overflow: 'scroll',
     top: 0,
     bottom: 0,
     right: 0,

@@ -4,6 +4,7 @@ const drawerWidth = 400;
 export const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
+    overflow: 'scroll',
     top: 0,
     bottom: 0,
     left: 0,
