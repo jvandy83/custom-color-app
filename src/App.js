@@ -13,8 +13,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     let savedPalettes = JSON.parse(window.localStorage.getItem('palettes'));
-    savedPalettes = savedPalettes.length === 0 ? null : savedPalettes;
-    this.state = { palettes: savedPalettes || seedColors };
+    if (!savedPalettes || savedPalettes.length === 0) {
+      savedPalettes = seedColors;
+    }
+    // savedPalettes = savedPalettes.length === 0 ? null : savedPalettes;
+    this.state = { palettes: savedPalettes };
   }
 
   savePalette = (newPalette) => {
@@ -45,7 +48,7 @@ class App extends Component {
     let updatedPalette = null;
     // check localStorage first
     let paletteArray = JSON.parse(localStorage.getItem('palettes'));
-    if (paletteArray.length) {
+    if (paletteArray && paletteArray.length) {
       console.log('inside paletteArray "isTrue" if statement');
       updatedPalette = paletteArray.filter((p) => p.id !== id);
     } else {

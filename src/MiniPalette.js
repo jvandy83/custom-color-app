@@ -29,7 +29,7 @@ function MiniPalette({
     return setExit(false), setTimeout(() => setExit(true), 1000);
   };
 
-  const handleOpenModal = e => {
+  const handleOpenModal = (e) => {
     e.stopPropagation();
     setOpen(true);
   };
@@ -67,7 +67,7 @@ function MiniPalette({
         onClick={handleLink}
       >
         <div
-          onClick={e => handleOpenModal(e)}
+          onClick={(e) => handleOpenModal(e)}
           className={classes.deleteOverlay}
         >
           <DeleteForeverIcon className={classes.deleteIcon}>
